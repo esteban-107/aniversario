@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feliz Aniversario</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="contenedor-titulo">
+    <h1> Feliz Aniversario </h1>
+    <div id="fuegos-artificiales"></div>
+  </div>
+  <div class="seccion-contadores">
+    <div id="contador" class="reloj">
+      Llevamos <span class="numero" id="años">0</span> años, <span class="numero" id="meses">0</span> meses y <span class="numero" id="dias">0</span> días juntos ❤️
+    </div>
+    <div id="contador2" class="reloj">
+      Pero verdaderamente juntos hace <span class="numero" id="añosVerdadero">0</span> años, <span class="numero" id="mesesVerdadero">0</span> meses y <span class="numero" id="diasVerdadero">0</span> días ❤️
+    </div>
+  </div>
+
+  <div class="contenedor-botones">
+    <div class="boton-efecto" onclick="mostrarSeccion('video'); crearEfectosBoton(event)">
+      <button>🎥 Ver Video</button>
+    </div>
+    <div class="boton-efecto" onclick="mostrarSeccion('galeria'); crearEfectosBoton(event)">
+      <button>📸 Fotos</button>
+    </div>
+    <div class="boton-efecto" onclick="mostrarSeccion('mensajes'); crearEfectosBoton(event)">
+      <button>💌 Mensajes</button>
+    </div>
+    <div class="boton-efecto" onclick="sorpresa(); crearEfectosBoton(event)">
+      <button>🎁 Sorpresa</button>
+    </div>
+  </div>
+
+  <div id="video" class="seccion">
+    <h2>Nuestro video</h2>
+    <video controls width="300">
+      <source src="video.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div id="galeria" class="seccion">
+    <h2>Momentos juntos</h2>
+    <img src="foto1.jpg" width="150">
+    <img src="foto2.jpg" width="150">
+  </div>
+
+  <div id="mensajes" class="seccion">
+    <h2>💌 Mensajes para siempre</h2>
+    <div class="diario-container">
+      <div class="formulario-frase">
+        <textarea id="nuevaFrase" placeholder="Escribe algo especial..." maxlength="200"></textarea>
+        <button onclick="agregarFrase()">Guardar</button>
+      </div>
+      <div id="listaMensajes" class="lista-frases">
+        <!-- Las frases se cargarán aquí -->
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
