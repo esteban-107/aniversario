@@ -39,6 +39,44 @@ h2 {
   position: relative;
   display: inline-block;
   width: 100%;
+  background: linear-gradient(180deg, rgba(139, 44, 44, 0.5) 0%, rgba(139, 44, 44, 0.8) 50%, rgba(139, 44, 44, 0.5) 100%);
+  padding: 40px 20px 30px 20px;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.decoracion-superior,
+.decoracion-inferior {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 15px 0;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.linea-decorativa {
+  flex: 1;
+  max-width: 150px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 192, 203, 0.8), transparent);
+  box-shadow: 0 0 10px rgba(255, 192, 203, 0.5);
+}
+
+.corazones-decorativos {
+  font-size: 24px;
+  letter-spacing: 10px;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
 }
 
 .contenedor-botones {
@@ -220,6 +258,23 @@ button:active {
   margin-bottom: 25px;
 }
 
+#nombreAutor {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #8b2c2c;
+  border-radius: 8px;
+  font-family: 'Georgia', serif;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+#nombreAutor:focus {
+  outline: none;
+  border-color: #c01e1e;
+  box-shadow: 0 0 8px rgba(192, 30, 30, 0.3);
+}
+
 #nuevaFrase {
   width: 100%;
   padding: 12px;
@@ -335,6 +390,98 @@ button:active {
   transform: scale(1.1);
 }
 
+/* Estilos para la sección de presentación */
+.texto-presentacion {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+  backdrop-filter: blur(10px);
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 50px 30px;
+  margin: 40px auto;
+  max-width: 700px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 2.5s ease-in-out;
+}
+
+.contenedor-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.texto-presentacion p {
+  color: #ffffff;
+  font-family: 'Georgia', serif;
+  font-size: 18px;
+  line-height: 1.8;
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.texto-presentacion p:first-child {
+  animation: slideInUp 1s ease-out 0.2s both;
+}
+
+.texto-presentacion p:nth-child(2) {
+  animation: slideInUp 1s ease-out 0.4s both;
+}
+
+.frase-final {
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  color: #ffb3ba !important;
+  margin-top: 10px !important;
+  letter-spacing: 1px !important;
+  animation: slideInUp 1s ease-out 0.6s both !important;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .texto-presentacion {
+    padding: 30px 20px;
+    margin: 30px 15px;
+    max-width: 95%;
+  }
+
+  .texto-presentacion p {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .frase-final {
+    font-size: 18px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .texto-presentacion {
+    padding: 20px 15px;
+    margin: 20px 10px;
+  }
+
+  .texto-presentacion p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .frase-final {
+    font-size: 16px !important;
+  }
+}
+
 /* Media queries para responsividad */
 @media (max-width: 768px) {
   body {
@@ -342,6 +489,19 @@ button:active {
     text-align: center;
     background: #8b2c2c;
     padding: 10px;
+  }
+
+  .contenedor-titulo {
+    padding: 30px 15px 20px 15px;
+  }
+
+  .corazones-decorativos {
+    font-size: 20px;
+    letter-spacing: 8px;
+  }
+
+  .linea-decorativa {
+    max-width: 100px;
   }
 
   h1 {
@@ -422,6 +582,19 @@ button:active {
 }
 
 @media (max-width: 480px) {
+  .contenedor-titulo {
+    padding: 20px 10px 15px 10px;
+  }
+
+  .corazones-decorativos {
+    font-size: 18px;
+    letter-spacing: 6px;
+  }
+
+  .linea-decorativa {
+    max-width: 80px;
+  }
+
   h1 {
     font-size: 24px;
     margin: 15px 0 10px 0;

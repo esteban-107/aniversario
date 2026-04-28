@@ -181,10 +181,17 @@ function sorpresa() {
 // Función para agregar una nueva frase al diario
 function agregarFrase() {
   const textarea = document.getElementById('nuevaFrase');
+  const nombreInput = document.getElementById('nombreAutor');
   const frase = textarea.value.trim();
+  const nombre = nombreInput.value.trim();
   
   if (frase === '') {
     alert('Por favor escribe una frase');
+    return;
+  }
+  
+  if (nombre === '') {
+    alert('Por favor escribe tu nombre');
     return;
   }
   
@@ -204,6 +211,7 @@ function agregarFrase() {
   const nuevaFrase = {
     id: Date.now(),
     texto: frase,
+    autor: nombre,
     fecha: fecha
   };
   
@@ -213,9 +221,10 @@ function agregarFrase() {
   // Guardar en localStorage
   localStorage.setItem('diarioFrases', JSON.stringify(frases));
   
-  // Limpiar textarea
+  // Limpiar campos
   textarea.value = '';
-  textarea.focus();
+  nombreInput.value = '';
+  nombreInput.focus();
   
   // Actualizar la lista
   cargarFrases();
@@ -249,7 +258,7 @@ function cargarFrases() {
     elemento.innerHTML = `
       <p class="texto-frase">"${frase.texto}"</p>
       <div class="frase-footer">
-        <span class="fecha-frase">${frase.fecha}</span>
+        <span class="fecha-frase"><strong>${frase.autor || 'Anónimo'}</strong> - ${frase.fecha}</span>
         <button onclick="eliminarFrase(${frase.id})" class="btn-eliminar">✕</button>
       </div>
     `;
