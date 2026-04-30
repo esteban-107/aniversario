@@ -123,56 +123,43 @@ window.addEventListener('load', () => {
   crearFuegosArtificiales();
 });
 
-// Fecha de inicio de la relación
-const inicio = new Date("2022-05-01");
+// Contadores desactivados temporalmente mientras se reinician desde 0
+// Mantener estructura para reutilizar el diseño en el futuro.
+// Primer contador: inicio de nuestra relación = 1 de mayo de 2022.
+// Segundo contador: comienza el 31 de octubre de 2021.
 
+const inicio = new Date(2022, 4, 1); // inicio de nuestra relación: 1 de mayo de 2022
+const inicioVerdadero = new Date(2021, 9, 31); // segundo contador: 31 de octubre de 2021
 const hoy = new Date();
 
-// Calcular años, meses y días
-let años = hoy.getFullYear() - inicio.getFullYear();
-let meses = hoy.getMonth() - inicio.getMonth();
-let dias = hoy.getDate() - inicio.getDate();
+function calcularDiferencia(fechaInicio, fechaFin) {
+  let años = fechaFin.getFullYear() - fechaInicio.getFullYear();
+  let meses = fechaFin.getMonth() - fechaInicio.getMonth();
+  let dias = fechaFin.getDate() - fechaInicio.getDate();
 
-// Ajustar si los días son negativos
-if (dias < 0) {
-  meses--;
-  const ultimoDiaMesAnterior = new Date(hoy.getFullYear(), hoy.getMonth(), 0).getDate();
-  dias += ultimoDiaMesAnterior;
+  if (dias < 0) {
+    meses--;
+    const ultimoDiaMesAnterior = new Date(fechaFin.getFullYear(), fechaFin.getMonth(), 0).getDate();
+    dias += ultimoDiaMesAnterior;
+  }
+
+  if (meses < 0) {
+    años--;
+    meses += 12;
+  }
+
+  return { años, meses, dias };
 }
 
-// Ajustar si los meses son negativos
-if (meses < 0) {
-  años--;
-  meses += 12;
-}
+const diferencia = calcularDiferencia(inicio, hoy);
+document.getElementById("años").innerText = diferencia.años;
+document.getElementById("meses").innerText = diferencia.meses;
+document.getElementById("dias").innerText = diferencia.dias;
 
-document.getElementById("años").innerText = años;
-document.getElementById("meses").innerText = meses;
-document.getElementById("dias").innerText = dias;
-
-// Fecha de inicio verdadera
-const inicioVerdadero = new Date("2021-10-31");
-
-let añosVerdadero = hoy.getFullYear() - inicioVerdadero.getFullYear();
-let mesesVerdadero = hoy.getMonth() - inicioVerdadero.getMonth();
-let diasVerdadero = hoy.getDate() - inicioVerdadero.getDate();
-
-// Ajustar si los días son negativos
-if (diasVerdadero < 0) {
-  mesesVerdadero--;
-  const ultimoDiaMesAnteriorVerdadero = new Date(hoy.getFullYear(), hoy.getMonth(), 0).getDate();
-  diasVerdadero += ultimoDiaMesAnteriorVerdadero;
-}
-
-// Ajustar si los meses son negativos
-if (mesesVerdadero < 0) {
-  añosVerdadero--;
-  mesesVerdadero += 12;
-}
-
-document.getElementById("añosVerdadero").innerText = añosVerdadero;
-document.getElementById("mesesVerdadero").innerText = mesesVerdadero;
-document.getElementById("diasVerdadero").innerText = diasVerdadero;
+const diferenciaVerdadera = calcularDiferencia(inicioVerdadero, hoy);
+document.getElementById("añosVerdadero").innerText = diferenciaVerdadera.años;
+document.getElementById("mesesVerdadero").innerText = diferenciaVerdadera.meses;
+document.getElementById("diasVerdadero").innerText = diferenciaVerdadera.dias;
 
 const frasesSorpresa = [
   "Te amo infinitamente amor ✨❤️",
