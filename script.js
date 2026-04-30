@@ -174,8 +174,27 @@ document.getElementById("añosVerdadero").innerText = añosVerdadero;
 document.getElementById("mesesVerdadero").innerText = mesesVerdadero;
 document.getElementById("diasVerdadero").innerText = diasVerdadero;
 
+const frasesSorpresa = [
+  "Te amo infinitamente amor ✨❤️",
+  "Cada momento a tu lado es increible 🌟💖",
+  "Deseo que cumplas todos tus sueños amor🌙✨",
+  "Eres hermosa 💓🌹",
+  "Quiero verte titulada mi niña 📜💘",
+  "Espero poder tener una historia sin final a tu lado 💌🌺",
+  "Enfocate en ti y seras una mijita rica aún más 💞🌟",
+  "TE AMOOOOOOOOOOOO 🏡💕",
+  "Para ti siempre estaré 🤍😊",
+  "Te estoy pensando 🎶❤️"
+];
+
 function sorpresa() {
-  alert("Te amo muchísimo ❤️");
+  const frase = frasesSorpresa[Math.floor(Math.random() * frasesSorpresa.length)];
+  document.getElementById('sorpresaTexto').innerText = frase;
+  document.getElementById('sorpresaModal').classList.add('visible');
+}
+
+function cerrarSorpresa() {
+  document.getElementById('sorpresaModal').classList.remove('visible');
 }
 
 // Función para agregar una nueva frase al diario
