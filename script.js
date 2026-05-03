@@ -201,9 +201,6 @@ function agregarFrase() {
     return;
   }
   
-  // Obtener frases guardadas
-  let frases = JSON.parse(localStorage.getItem('diarioFrases')) || [];
-  
   // Crear objeto de frase con fecha
   const ahora = new Date();
   const fecha = ahora.toLocaleDateString('es-ES', {
@@ -215,60 +212,56 @@ function agregarFrase() {
   });
   
   const nuevaFrase = {
-    id: Date.now(),
     texto: frase,
     autor: nombre,
     fecha: fecha
   };
   
-  // Agregar frase al inicio del array
-  frases.unshift(nuevaFrase);
-  
-  // Guardar en localStorage
-  localStorage.setItem('diarioFrases', JSON.stringify(frases));
+  // Guardar en Firebase
+  db.ref('mensajes').push(nuevaFrase);
   
   // Limpiar campos
   textarea.value = '';
   nombreInput.value = '';
   nombreInput.focus();
-  
-  // Actualizar la lista
-  cargarFrases();
 }
 
 // Función para eliminar una frase
-function eliminarFrase(id) {
+function eliminarFrase(key) {
   if (confirm('¿Estás seguro que deseas eliminar esta frase?')) {
-    let frases = JSON.parse(localStorage.getItem('diarioFrases')) || [];
-    frases = frases.filter(f => f.id !== id);
-    localStorage.setItem('diarioFrases', JSON.stringify(frases));
-    cargarFrases();
+    db.ref('mensajes').child(key).remove();
   }
 }
 
 // Función para cargar y mostrar las frases guardadas
 function cargarFrases() {
   const listaMensajes = document.getElementById('listaMensajes');
-  const frases = JSON.parse(localStorage.getItem('diarioFrases')) || [];
   
-  listaMensajes.innerHTML = '';
-  
-  if (frases.length === 0) {
-    listaMensajes.innerHTML = '<p class="sin-frases">Aún no hay nada. ¡Escribe algo! 💭</p>';
-    return;
-  }
-  
-  frases.forEach(frase => {
-    const elemento = document.createElement('div');
-    elemento.className = 'frase-item';
-    elemento.innerHTML = `
-      <p class="texto-frase">"${frase.texto}"</p>
-      <div class="frase-footer">
-        <span class="fecha-frase"><strong>${frase.autor || 'Anónimo'}</strong> - ${frase.fecha}</span>
-        <button onclick="eliminarFrase(${frase.id})" class="btn-eliminar">✕</button>
-      </div>
-    `;
-    listaMensajes.appendChild(elemento);
+  // Escuchar cambios en tiempo real
+  db.ref('mensajes').on('value', (snapshot) => {
+    const data = snapshot.val();
+    listaMensajes.innerHTML = '';
+    
+    if (!data) {
+      listaMensajes.innerHTML = '<p class="sin-frases">Aún no hay nada. ¡Escribe algo! 💭</p>';
+      return;
+    }
+    
+    // Convertir a array y ordenar por fecha (más recientes primero)
+    const frases = Object.keys(data).map(key => ({ key, ...data[key] })).reverse();
+    
+    frases.forEach(frase => {
+      const elemento = document.createElement('div');
+      elemento.className = 'frase-item';
+      elemento.innerHTML = `
+        <p class="texto-frase">"${frase.texto}"</p>
+        <div class="frase-footer">
+          <span class="fecha-frase"><strong>${frase.autor || 'Anónimo'}</strong> - ${frase.fecha}</span>
+          <button onclick="eliminarFrase('${frase.key}')" class="btn-eliminar">✕</button>
+        </div>
+      `;
+      listaMensajes.appendChild(elemento);
+    });
   });
 }
 
